@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hnu.mn.mapper.UserPermissionMapper">
+	<!--根据User查找Role  -->
+	<select id="selRoleByUser" resultType="hnu.mn.pojo.SysRole">
+		select * from sys_role where roleID in(select roleID from sys_user_role where userID =#{userID});
+	</select>
+	
+	
+	<!--根据Role查找Permissions  -->
+	<select id="selPermissionsByRole" resultType="hnu.mn.pojo.SysPermission">
+		select * from sys_permission where
+		permissionID in (select permissionID from sys_role_permission where
+		roleID=#{roleID});
+	</select>
+	
+</mapper>
